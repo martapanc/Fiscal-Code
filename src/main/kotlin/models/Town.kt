@@ -1,4 +1,4 @@
-package methods
+package models
 
 class Town(val townName: String, val townCode: String) {
 

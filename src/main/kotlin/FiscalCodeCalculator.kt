@@ -1,6 +1,6 @@
-import methods.DataPanel
+import GUI.DataPanel
 
-import javax.swing.*
+import javax.swing.JFrame
 
 object FiscalCodeCalculator {
 

@@ -1,48 +1,49 @@
-package methods
+package GUI
 
+import computations.ComputeFiscalCode
 import javax.swing.*
-import java.awt.*
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.Font
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.io.IOException
 
 class DataPanel : JPanel() {
 
-    internal var headPanel: JPanel
-    internal var dataPanel: JPanel
-    internal var midPanel: JPanel
-    internal var namePanel: JPanel
-    internal var surnamePanel: JPanel
-    internal var sexPanel: JPanel
-    internal var datePanel: JPanel
-    internal var townPanel: JPanel
-    internal var resultPanel: JPanel
-    internal var buttonPanel: JPanel
+    private var buttonPanel: JPanel
+    private var dataPanel = JPanel()
+    private var datePanel: JPanel
+    private var genderPanel: JPanel
+    private var headPanel: JPanel
+    private var midPanel: JPanel
+    private var namePanel: JPanel
+    private var resultPanel: JPanel
+    private var surnamePanel: JPanel
+    private var townPanel: JPanel
+    private var head: JLabel
+    private var sub: JLabel
+    private var dayLabel: JLabel
+    private var genderLabel: JLabel
+    private var monthLabel: JLabel
+    private var nameLabel: JLabel
+    private var resultLabel: JLabel
+    private var surnameLabel: JLabel
+    private var townLabel: JLabel
+    private var yearLabel: JLabel
+    private var spec: JLabel
+    private var calc: JButton
     internal var nameField: JTextField
-    internal var surnameField: JTextField
-    internal var yearField: JTextField
-    internal var townField: JTextField
     internal var resultField: JTextField
+    internal var surnameField: JTextField
+    internal var townField: JTextField
+    internal var yearField: JTextField
     internal var f: JRadioButton
     internal var m: JRadioButton
     internal var dayMenu: JComboBox<String>
     internal var monthMenu: JComboBox<String>
-    internal var head: JLabel
-    internal var sub: JLabel
-    internal var nameLabel: JLabel
-    internal var surnameLabel: JLabel
-    internal var sexLabel: JLabel
-    internal var dayLabel: JLabel
-    internal var monthLabel: JLabel
-    internal var yearLabel: JLabel
-    internal var townLabel: JLabel
-    internal var spec: JLabel
-    internal var resultLabel: JLabel
-    internal var calc: JButton
 
     init {
-
-        dataPanel = JPanel()
         dataPanel.preferredSize = Dimension(450, 600)
 
         headPanel = JPanel()
@@ -73,17 +74,17 @@ class DataPanel : JPanel() {
         surnamePanel.add(surnameLabel)
         surnamePanel.add(surnameField)
 
-        sexPanel = JPanel()
-        sexPanel.preferredSize = Dimension(380, 40)
-        sexLabel = JLabel("Sex: ")
+        genderPanel = JPanel()
+        genderPanel.preferredSize = Dimension(380, 40)
+        genderLabel = JLabel("Gender: ")
         f = JRadioButton("Female")
         m = JRadioButton("Male")
         val bg = ButtonGroup()
         bg.add(f)
         bg.add(m)
-        sexPanel.add(sexLabel)
-        sexPanel.add(f)
-        sexPanel.add(m)
+        genderPanel.add(genderLabel)
+        genderPanel.add(f)
+        genderPanel.add(m)
 
         datePanel = JPanel()
         datePanel.preferredSize = Dimension(180, 110)
@@ -133,7 +134,7 @@ class DataPanel : JPanel() {
         calc = JButton("Calculate")
         calc.font = Font("Arial", 18, 18)
         calc.preferredSize = Dimension(150, 50)
-        calc.addActionListener(calcListener())
+        calc.addActionListener(CalcListener())
         buttonPanel.add(calc)
 
         resultPanel = JPanel()
@@ -150,7 +151,7 @@ class DataPanel : JPanel() {
         dataPanel.add(headPanel)
         midPanel.add(namePanel)
         midPanel.add(surnamePanel)
-        midPanel.add(sexPanel)
+        midPanel.add(genderPanel)
         midPanel.add(datePanel)
         midPanel.add(townPanel)
         dataPanel.add(midPanel)
@@ -160,7 +161,7 @@ class DataPanel : JPanel() {
         add(dataPanel)
     }
 
-    inner class calcListener : ActionListener {
+    inner class CalcListener : ActionListener {
         override fun actionPerformed(event: ActionEvent) {
 
             resultField.text = ""
@@ -186,7 +187,12 @@ class DataPanel : JPanel() {
 
             var fiscalCode = ComputeFiscalCode.computeSurname(surname)
             fiscalCode += ComputeFiscalCode.computeName(name)
-            fiscalCode += ComputeFiscalCode.computeDateOfBirth(birthday, month, year, fm)
+            fiscalCode += ComputeFiscalCode.computeDateOfBirth(
+                birthday,
+                month,
+                year,
+                fm
+            )
 
             try {
                 fiscalCode += ComputeFiscalCode.computeTownOfBirth(town)

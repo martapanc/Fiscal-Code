@@ -1,10 +1,8 @@
-package methods
+package computations
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 object FunctionChecks {
@@ -17,8 +15,8 @@ object FunctionChecks {
         return Pattern.matches("[0-9]+", string)
     }
 
-    fun howManyConsonants(string: String): Int {
-        var string = string
+    fun howManyConsonants(input: String): Int {
+        var string = input
         val match = StringBuilder()
         if (isAllLetters(string)) {
             string = string.toUpperCase()
@@ -31,8 +29,8 @@ object FunctionChecks {
         return match.length
     }
 
-    fun howManyVowels(string: String): Int {
-        var string = string
+    fun howManyVowels(input: String): Int {
+        var string = input
         val match = StringBuilder()
         if (isAllLetters(string)) {
             string = string.toUpperCase()
@@ -50,13 +48,12 @@ object FunctionChecks {
         val year: Int
         if (isAllDigits(yearString)) {
             year = Integer.parseInt(yearString)
-            return year >= 1900 && year <= currentYear
+            return year in 1900..currentYear
         }
         return false
     }
 
     fun isDateValid(day: String, month: String, year: String): Boolean {
-        // Check whether a date is valid or not (e.g. 29/02/2001)
         if (isYearValid(year)) {
             val dateToCheck = "$day-$month-$year"
             Calendar.getInstance()
@@ -67,7 +64,6 @@ object FunctionChecks {
                 val date = sdf.parse(dateToCheck)
                 val current = Calendar.getInstance().time
                 if (date.after(current))
-                // You cannot calculate a fiscal code if the birthday is after the current day
                     return false
             } catch (e: ParseException) {
                 return false
@@ -79,7 +75,6 @@ object FunctionChecks {
     }
 
     fun replaceSpecialChars(input: String): String {
-        //If the name or surname include stressed letters (à,è,ì...) or other special characters (ä,ç,ß,...), it replaces them with corresponding letter (e.g. à = a)
         return input
             .toUpperCase()
             .replace("[ÀÁÂÃÅĀ]".toRegex(), "A")

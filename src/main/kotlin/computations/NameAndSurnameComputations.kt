@@ -1,12 +1,11 @@
-package methods
+package computations
 
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 object NameAndSurnameComputations {
 
-    private val VOWEL_PATTERN = "[AEIOU]"
-    private val CONSONANT_PATTERN = "[B-DF-HJ-NP-TV-Z]"
+    private const val VOWEL_PATTERN = "[AEIOU]"
+    private const val CONSONANT_PATTERN = "[B-DF-HJ-NP-TV-Z]"
     private val COMPILE_WOVELS = Pattern.compile(VOWEL_PATTERN)
     private val COMPILE_CONSONANTS = Pattern.compile(CONSONANT_PATTERN)
 
